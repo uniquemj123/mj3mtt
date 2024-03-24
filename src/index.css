@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght&display=swap');
+
+body {
+    font-family: "Lato", sans-serif;
+}
+
+.hero {
+    background: url('../src/assets/emergencybackpc.jpeg');
+    height: 500px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+h1 {
+    font-size: 48px;
+}
+
+.btn-danger {
+    background-color: #E71800 !important;
+}
+
+.background {
+    background-image: url('../src/assets/night3.jpeg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 400px;
+}
