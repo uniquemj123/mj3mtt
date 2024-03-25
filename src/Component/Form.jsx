@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
+import axios from 'axios';
 
 function Form() {
     const [formData, setFormData] = useState({
         name: '',
-        email: '',
         phone: '',
-        subject: '',
+        location: '',
         message: ''
     });
     const [errors, setErrors] = useState({});
@@ -23,15 +23,12 @@ function Form() {
             errors.name = 'Name is required';
         }
 
-        if (!formData.email.trim()) {
-            errors.email = 'Email is required';
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-            errors.email = 'Invalid Format';
+        
+        if (!formData.phone.trim()) {
+            errors.phone = 'Phone is required';
         }
-
-
-        if (!formData.subject.trim()) {
-            errors.subject = 'Subject is required';
+        if (!formData.location.trim()) {
+            errors.location = 'location is required';
         }
 
         if (!formData.message.trim()) {
@@ -40,18 +37,23 @@ function Form() {
         setErrors(errors);
         return Object.keys(errors).length === 0;
     };
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (validateForm()) {
-            //processing the information
-            alert('Message sent successfully');
-            console.log(formData)
-
-            // to redirect to another page
-            window.location.href = '/contact';
-
+    
+          try {
+            const response = await axios.post('https://sheet.best/api/sheets/b84ee7b5-2122-4322-985e-cd89d1d67302', formData);
+            console.log('Form submitted:', response.data);
+            // Assuming the form submission was successful, you can handle it here
+            alert('Message sent Successfully');
+            // page reload
+            window.location.reload();
+          } catch (error) {
+            console.error('Error submitting form:', error);
+            // Handle error accordingly
+          }
         }
-    };
+      };
     return (
         <div>
             <form action="" onSubmit={handleSubmit}>
@@ -60,23 +62,16 @@ function Form() {
                         <input type="text" name='name' value={formData.name} placeholder='Name' className={`form-control ${errors.name && 'is-invalid'}`} onChange={handleChange} />
                         {errors.name && <div className='invalid-feedback'>{errors.name}</div>}
                     </div>
-                    <div className="flex-grow-1 ms-2">
-                        <input type="email" name='email' value={formData.email} placeholder='Email' className={`form-control ${errors.name && 'is-invalid'}`} onChange={handleChange} />
-                        {errors.email && <div className='invalid-feedback'>{errors.email}</div>}
-                    </div>
-                </div>
-                <div className="d-flex mt-3 container-fluid rounded">
+
                     <div className="flex-grow-1 me-2">
-                        <input type="number" name='phone' value={formData.phone} placeholder='Phone' className={`form-control ${errors.name && 'is-invalid'}`} onChange={handleChange} />
+                        <input type="text" name='phone' value={formData.phone} placeholder='Phone' className={`form-control ${errors.name && 'is-invalid'}`} onChange={handleChange} />
                         {errors.phone && <div className='invalid-feedback'>{errors.phone}</div>}
                     </div>
-                    <div className="flex-grow-1 ms-2">
-                        <input type="address" name='address' value={formData.address} placeholder='Address' className={`form-control ${errors.name && 'is-invalid'}`} onChange={handleChange} />
-                        {errors.address && <div className='invalid-feedback'>{errors.address}</div>}
-                    </div>
+                    
                 </div>
-                <div className="flex-grow-1 ms-2">
-                    <input type="location" name='location' value={formData.address} placeholder='Where is your location?' className={`form-control ${errors.name && 'is-invalid'}`} onChange={handleChange} />
+                
+                <div className="mt-3">
+                    <input type="location" name='location' value={formData.location} placeholder='Where is your location?' className={`form-control ${errors.name && 'is-invalid'}`} onChange={handleChange} />
                     {errors.location && <div className='invalid-feedback'>{errors.location}</div>}
                 </div>
 

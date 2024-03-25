@@ -23,10 +23,10 @@ function Home() {
             <div className="container">
                 <div className="row">
                     <div className="col-md-6">
-                        <img src={Night3} alt="" />
+                        <img src={Night3} alt="" className='img-fluid rounded'/>
                     </div>
                     <div className="col-md-6 ">
-                        <img src={Police3} alt="" />
+                        <img src={Police3} alt="" className='img-fluid rounded'/>
                     </div>
                 </div>
             </div>
